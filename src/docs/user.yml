@@ -1,0 +1,96 @@
+/api/v1/users/register:
+  post:
+    tags:
+      - Users
+    summary: Create a new user account
+    description: Create a new user account
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: Edwin
+              email:
+                type: string
+                example: nambajeeedwin@gmail.com
+              password:
+                type: string
+                example: 123@Pass
+    responses:
+      "201":
+        description: Successful operation
+      "400":
+        description: Bad Request
+      "500":
+        description: Internal Server Error
+/api/v1/users/login:
+  post:
+    tags:
+      - Users
+    summary: Login to your user account
+    description: Login to your user account by providing an email along with the password.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: nambajeeedwin@gmail.com
+              password:
+                type: string
+                example: 123@Pass
+
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The entered identifier (phone number or email)
+                token:
+                  type: string
+                  description: The generated authentication token
+                message:
+                  type: string
+                  description: Login Successful
+      "400":
+        description: Bad Request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Incorrect phone number or password
+      "404":
+        description: Account does not exist
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Account does not exist
+      "500":
+        description: Internal Server Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  description: Internal Server Error message

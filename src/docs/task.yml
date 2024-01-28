@@ -1,0 +1,51 @@
+/api/v1/tasks/create:
+  post:
+    tags:
+      - Task
+    summary: Create a new Task by authenticated users
+    description: Create a new Task by authenticated users
+    security:
+      - {}
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Devops Internship
+              description:
+                type: string
+                example: This is a really good Internship for devops beginners
+    responses:
+      "200":
+        description: Successful operation
+      "400":
+        description: Bad Request
+      "401":
+        description: Unauthorized
+      "500":
+        description: Internal Server Error
+/api/v1/tasks/mine:
+  get:
+    tags:
+      - Task
+    summary: get all tasks mine
+    description: get all tasks mine
+    security:
+      - {}
+      - bearerAuth: []
+    responses:
+      "200":
+        description: Successful operation
+      "400":
+        description: Bad Request
+      "401":
+        description: UnAauthorized
+      "403":
+        description: Forbidden
+      "500":
+        description: Internal Server Error

@@ -6,7 +6,6 @@ COPY package.json .
 RUN npm i
 
 COPY . .
-
 EXPOSE 3005
-
-CMD ["npm", "run", "start:prod"]
+RUN npm run build
+CMD [ "npm", "run", "start" ]

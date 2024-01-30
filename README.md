@@ -1,4 +1,4 @@
-# Task Tracker [![Github Actions](https://github.com/edwinnambaje/Task-Tracker/actions/workflows/actions.yml/badge.svg)](https://github.com/edwinnambaje/Task-Tracker/actions/workflows/actions.yml)
+# Task Tracker [![Github Actions](https://github.com/edwinnambaje/Task-Tracker/actions/workflows/action.yml/badge.svg)](https://github.com/edwinnambaje/Task-Tracker/actions/workflows/action.yml)
 
 Task Tracker is an innovative solution that transforms your daily task management experience. With a focus on encouraging concentrated work and effective prioritization, this app allows users to set and prioritize daily tasks seamlessly. Task Tracker goes beyond traditional “to-do list” or task management apps by providing quick insights into your progress and overall daily completion status.
 

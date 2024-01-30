@@ -1,9 +1,14 @@
-/api/v1/tasks/create:
+/api/v1/subtask/create/{taskId}:
   post:
     tags:
-      - Task
-    summary: Create a new Task by authenticated users
-    description: Create a new Task by authenticated users
+      - SubTask
+    summary: Create a new sub task for a task
+    description: Create a new sub task for a task
+    parameters:
+      - name: taskId
+        in: path
+        description: taskId to add subtasks for
+        type: string
     security:
       - {}
       - bearerAuth: []
@@ -29,12 +34,17 @@
         description: Unauthorized
       "500":
         description: Internal Server Error
-/api/v1/tasks/mine:
+/api/v1/subtask/{taskId}:
   get:
     tags:
-      - Task
-    summary: get all tasks mine
-    description: get all tasks mine
+      - SubTask
+    summary: get all sub tasks for a task
+    description: get all sub tasks for a task
+    parameters:
+      - name: taskId
+        in: path
+        description: taskId to add subtasks for
+        type: string
     security:
       - {}
       - bearerAuth: []
@@ -49,16 +59,16 @@
         description: Forbidden
       "500":
         description: Internal Server Error
-/api/v1/tasks/complete/{taskId}:
+/api/v1/subtask/complete/{subTaskId}:
   put:
     tags:
-      - Task
-    summary: Marking task as completed
-    description: Marking task as completed
+      - SubTask
+    summary: Marking sub task as completed
+    description: Marking sub task as completed
     parameters:
-      - name: taskId
+      - name: subTaskId
         in: path
-        description: taskId to mark as completed
+        description: subTaskId to mark as completed
         type: string
     security:
       - {}
@@ -76,16 +86,16 @@
         description: Not Found
       "500":
         description: Internal Server Error
-/api/v1/task/{taskId}:
+/api/v1/subtask/{subTaskId}:
   get:
     tags:
-      - Task
-    summary: get a single task 
-    description: get a single task 
+      - SubTask
+    summary: get a single subtask 
+    description: get a single subtask 
     parameters:
-      - name: taskId
+      - name: subTaskId
         in: path
-        description: taskId to retrieve
+        description: subTaskId to retrieve
         type: string
     security:
       - {}
@@ -103,13 +113,13 @@
         description: Internal Server Error
   put:
     tags:
-      - Task
-    summary: update a Task
-    description: update a Task
+      - SubTask
+    summary: update a subtask
+    description: update a subtask
     parameters:
-      - name: taskId
+      - name: subTaskId
         in: path
-        description: TaskId to update
+        description: subTaskId to update
         type: string
     requestBody:
       required: true
@@ -141,13 +151,13 @@
         description: Internal Server Error
   delete:
     tags:
-      - Task
-    summary: delete a single Task 
-    description: delete a single Task 
+      - SubTask
+    summary: delete a single subtask 
+    description: delete a single subtask 
     parameters:
-      - name: taskId
+      - name: subTaskId
         in: path
-        description: taskId to delete
+        description: subTaskId to delete
         type: string
     security:
       - {}

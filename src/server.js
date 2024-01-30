@@ -7,6 +7,7 @@ dotenv.config();
 app.listen(port, () => {
   console.log("server started,", port);
 });
+console.log(process.env.PROD_DATABASE_URL);
 
 db.sequelize
   .authenticate()

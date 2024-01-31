@@ -20,10 +20,17 @@ app.get("/api/v1", (req, res) => {
     message: "Welcome to Task Tracker API"
   });
 });
-app.get('/metrics', (req, res) => {
-  res.set('Content-Type', Prometheus.register.contentType);
-  res.end(Prometheus.register.metrics());
+app.get('/metrics', async (req, res) => {
+  try {
+    res.set('Content-Type', Prometheus.register.contentType);
+    const metricsData = await Prometheus.register.metrics();
+    res.send(metricsData);
+  } catch (err) {
+    console.error('Error getting metrics:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swagger));
 app.use(cors());
 

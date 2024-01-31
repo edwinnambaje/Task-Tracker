@@ -1,6 +1,7 @@
 import env from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
+import Prometheus from 'prom-client';
 import swaggerUI from "swagger-ui-express";
 import swagger from "./docConfig/swagger";
 import allroutes from './routes/index.route';
@@ -9,6 +10,7 @@ const express = require("express");
 
 env.config();
 const app = express();
+Prometheus.collectDefaultMetrics();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
@@ -17,6 +19,10 @@ app.get("/api/v1", (req, res) => {
   res.status(200).json({
     message: "Welcome to Task Tracker API"
   });
+});
+app.get('/metrics', (req, res) => {
+  res.set('Content-Type', Prometheus.register.contentType);
+  res.end(Prometheus.register.metrics());
 });
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swagger));
 app.use(cors());

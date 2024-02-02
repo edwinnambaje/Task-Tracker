@@ -11,11 +11,55 @@ const express = require("express");
 env.config();
 const app = express();
 Prometheus.collectDefaultMetrics();
+// const httpRequestDurationMicroseconds = new Prometheus.Histogram({
+//   name: 'http_request_duration_ms',
+//   help: 'Duration of HTTP requests in ms',
+//   labelNames: ['method', 'route', 'code'],
+//   buckets: [0.10, 5, 15, 50, 100, 200, 300, 400, 500]
+// });
+// app.use((req, res, next) => {
+//   res.locals.startEpoch = Date.now();
+//   next();
+// });
+const httpRequestDurationMicroseconds = new Prometheus.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Duration of HTTP requests in seconds',
+  labelNames: ['route'],
+});
+
+const httpRequestErrors = new Prometheus.Counter({
+  name: 'http_request_errors_total',
+  help: 'Total number of HTTP request errors',
+  labelNames: ['route'],
+});
+
+// Middleware to measure request duration and count errors
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    httpRequestDurationMicroseconds.labels(req.path).observe(duration / 1000);
+  });
+  res.on('close', () => {
+    if (res.statusCode >= 400) {
+      httpRequestErrors.labels(req.path).inc();
+    }
+  });
+  next();
+});
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(allroutes);
+// app.use((req, res, next) => {
+//   const responseTimeInMs = Date.now() - res.locals.startEpoch;
+//   httpRequestDurationMicroseconds
+//     .labels(req.method, req.path, res.statusCode)
+//     .observe(responseTimeInMs);
+
+//   next();
+// });
 app.get("/api/v1", (req, res) => {
   res.status(200).json({
     message: "Welcome to Task Tracker API"

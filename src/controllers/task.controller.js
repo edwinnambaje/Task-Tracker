@@ -89,8 +89,7 @@ class Tasks {
       const task = await Task.findOne({
         where: {
           taskId,
-          userId,
-          completed: false,
+          userId
         },
       });
 
@@ -100,7 +99,13 @@ class Tasks {
           message: "Task not found or does not belong to the authenticated user",
         });
       }
-      if (title) {
+      if (task.completed === true) {
+        return res.status(404).json({
+          status: "fail",
+          message: "Task cannot be updated it has been completed",
+        });
+      }
+      if (title) { 
         task.title = title;
       }
 
@@ -124,8 +129,7 @@ class Tasks {
       const task = await Task.findOne({
         where: {
           taskId,
-          userId,
-          completed: false,
+          userId
         },
       });
 

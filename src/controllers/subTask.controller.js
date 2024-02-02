@@ -10,13 +10,14 @@ class SubTasks {
       const { title ,description} = req.body;
       const taskFound = await Task.findOne({
         where :{
-          taskId
+          taskId,
+          completed: false
         }
       });
       if(!taskFound){
         return res.status(400).json({
           status:"fail",
-          message : "Task not found"
+          message : "Task not found or task has been completed"
         });
       }
       const subTask = await SubTask.findOne({
@@ -72,6 +73,7 @@ class SubTasks {
           subTaskId,
           completed: false
         },
+        include: Task
       });
       if (!task) {
         return res.status(404).json({
@@ -100,6 +102,7 @@ class SubTasks {
         data: task,
       });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ status: "fail", error: error.message });
     }
   }

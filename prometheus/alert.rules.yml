@@ -1,0 +1,10 @@
+groups:
+  - name: example
+    rules:
+      - alert: HighRequestDuration
+        expr: http_request_duration_seconds > 0.1
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High request duration ({{ $value }}s) for route: {{ $labels.route }}"

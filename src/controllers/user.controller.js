@@ -31,7 +31,9 @@ class Users {
     try {
       const { email, password } = req.body;
       const users = await user.findOne({
-        email
+        where:{
+          email
+        }
       });
       if (!users) {
         return res.status(404).json({ status: "fail", message: "Account does not exist" });

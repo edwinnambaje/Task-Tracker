@@ -1,5 +1,6 @@
 import env from "dotenv";
 import cors from "cors";
+const treblle = require('@treblle/express');
 import morgan from "morgan";
 import Prometheus from 'prom-client';
 import swaggerUI from "swagger-ui-express";
@@ -51,6 +52,12 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
+app.use(
+  treblle({
+    apiKey: process.env.TREBLLE_API_KEY,
+    projectId: process.env.TREBLLE_PROJECT_ID
+  })
+);
 app.use(allroutes);
 // app.use((req, res, next) => {
 //   const responseTimeInMs = Date.now() - res.locals.startEpoch;
